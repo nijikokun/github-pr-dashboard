@@ -70,8 +70,8 @@ export function loadPullRequests() {
       dispatch(addPullRequests(response.data.pullRequests, sortOptions));
       dispatch(setRepos(response.data.repos));
       dispatch(setTitle(response.data.title || 'Pull Requests'));
-    }).catch(() => {
-      dispatch(setError('Failed to load pull requests. Double check that all your repos exist!'));
+    }).catch((e) => {
+      dispatch(setError(e.message));
     });
   };
 }

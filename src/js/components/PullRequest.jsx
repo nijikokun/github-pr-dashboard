@@ -4,8 +4,8 @@ import moment from 'moment';
 import '../../images/repo.svg';
 import '../../images/git-pull-request.svg';
 
-import UserPhoto from './UserPhoto';
-import { Comments } from './Comments';
+// import UserPhoto from './UserPhoto';
+// import { Comments } from './Comments';
 import { Status } from './Status';
 
 const CLASS_BASE = 'pull-request';
@@ -35,33 +35,29 @@ export default class PullRequest extends React.Component {
   render() {
     const pr = this.props.pullRequest;
     const className = getPrClassName(pr);
+    const status = pr.status || {};
 
     return (
       <div className={className}>
-        <UserPhoto size={50} user={pr.user} />
+        <div className={['pull-request-status', status.state || 'na'].join(' ')}></div>
         <div className="pull-request-info">
           <div className="pull-request-title">
-            <img src="images/git-pull-request.svg" alt="Pull request" />
-            &nbsp;
+            <i className="fa fa-code-fork" aria-hidden="true"></i>
+            <span className="pull-request-number">#{pr.number}</span>
             <a target="_blank" href={pr.url}>{pr.title}</a>
           </div>
-          <div>
-            <a target="_blank" href={pr.repoUrl}>
-              <img src="images/repo.svg" alt="Repository" /> {pr.repo}
-            </a>
-            <span className="pull-request-number">#{pr.number}</span>
-            <Status
-              status={pr.status}
-            />
-            <Comments
-              comments={pr.comments}
-              positiveCommentCount={pr.positiveComments}
-              negativeCommentCount={pr.negativeComments}
-              reactions={pr.reactions}
-            />
-          </div>
-          <div className="pull-request-created" title={this.formatTime('Created', pr.created)}>
-            Opened by {pr.user.username} {this.formatRelativeTime(pr.created)}
+          <div className="pull-request-details">
+            <div className="pull-request-pr">
+              <a target="_blank" href={pr.repoUrl}>
+                <i className="fa fa-github" aria-hidden="true"></i>
+                <label>{pr.repo}</label>
+              </a>
+              <Status status={pr.status} />
+            </div>
+            <div className="pull-request-created" title={this.formatTime('Created', pr.created)}>
+              <i className="fa fa-user" aria-hidden="true"></i>
+              <label>{pr.user.username} ({this.formatRelativeTime(pr.created)})</label>
+            </div>
           </div>
         </div>
         <div

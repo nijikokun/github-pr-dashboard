@@ -14,20 +14,25 @@ class Main extends React.Component {
         <LoadingOverlay />
       );
     }
-    return <div></div>;
+
+    return null;
   }
 
   renderFailedRepos() {
-    return (
-      <div>
-        {this.props.failedRepos.map(failedRepo =>
-          <ErrorMessage
-            key={failedRepo}
-            message={`Failed to load pull request data for ${failedRepo}.`}
-          />
-        )}
-      </div>
-    );
+    if (this.props.failedRepos.length) {
+      return (
+        <div>
+          {this.props.failedRepos.map(failedRepo =>
+            <ErrorMessage
+              key={failedRepo}
+              message={`Failed to load pull request data for ${failedRepo}.`}
+            />
+          )}
+        </div>
+      );
+    }
+
+    return null;
   }
 
   renderBody() {
@@ -36,11 +41,11 @@ class Main extends React.Component {
     }
 
     return (
-      <div>
+      <div className="pull-requests">
         {this.renderFailedRepos()}
         {this.renderLoading()}
         {this.props.pullRequests.map(pr =>
-          <div key={pr.id}>
+          <div className="pull-request-container" key={pr.id}>
             <PullRequest key={pr.id} pullRequest={pr} />
           </div>
         )}
@@ -52,19 +57,8 @@ class Main extends React.Component {
     return (
       <div className="container">
         <div className="container-header">
-          <h1>{this.props.title}</h1>
-          <div id="pr-count" title={`${this.props.pullRequests.length} pull requests`}>
-            <img role="presentation" src="images/git-pull-request.svg" />
-            &nbsp;
-            {this.props.pullRequests.length}
-          </div>
-          <div id="repo-count" title={`${this.props.repos.length} repositories`}>
-            <img role="presentation" src="images/repo.svg" />
-            &nbsp;
-            {this.props.repos.length}
-          </div>
+          <Toolbar failedRepos={this.props.failedRepos} />
         </div>
-        <Toolbar failedRepos={this.props.failedRepos} />
         {this.renderBody()}
         <Footer />
       </div>

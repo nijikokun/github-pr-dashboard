@@ -6,9 +6,13 @@ $success-color: #4AD964;
 $repo-link-color: #bbdde1;
 
 body {
-  background-color: #EEEEEE;
+  background-color: #000;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
+}
+
+#toolbar > div {
+  margin-left: 15px;
 }
 
 .overlay {
@@ -17,7 +21,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.6);;
+  background-color: rgba(0,0,0, 0.6);
   z-index: 100;
 
   display: flex;
@@ -52,50 +56,67 @@ footer {
   }
 }
 
+.pull-requests {
+  display: flex;
+  flex-wrap: wrap;
+
+  .pull-request-container {
+    width: 50%;
+  }
+}
+
 .pull-request {
   align-items: center;
-  background-color: #FEFEFE;
-  border: 1px solid #CCCCCC;
+  background-color: #252525;
   border-radius: 5px;
   display: flex;
   margin: 0.5rem;
   padding: 0.5rem;
+  color: #aaa;
 
   img {
     vertical-align: middle;
   }
+  
+  a {
+    color: white;
+  }
 
   &.pull-request--mergeable {
-    background: #90C695;
-    border-left: 36px solid #509655;
-
-    &:before {
-      color: #FFFFFF;
-      font-family: FontAwesome;
-      font-weight: normal;
-      font-style: normal;
-      display: inline-block;
-      text-decoration: inherit;
-      position: absolute;
-      margin-left: -34px;
-      content: "\f00c";
+    background: green;
+    color: white !important;
+    .pull-request-last-updated,
+    .pull-request-number {
+      color: white !important;
     }
+    
   }
 
   &.pull-request--unmergeable {
-    background: #D24D57;
-    border-left: 36px solid #A20D17;
+    background: red;
+    color: white !important;
+    .pull-request-last-updated,
+    .pull-request-number {
+      color: white !important;
+    }
+  }
 
-    &:before {
-      color: #FFFFFF;
-      font-family: FontAwesome;
-      font-weight: normal;
-      font-style: normal;
-      display: inline-block;
-      text-decoration: inherit;
-      position: absolute;
-      margin-left: -34px;
-      content: "\f071";
+  .pull-request-status {
+    display: block;
+    width: 15px;
+    background: #333;
+    height: 100px;
+    border-radius: 3px;
+    margin-right: 15px;
+  
+    &.error {
+      background: red;
+    }
+    &.pending {
+      background: gold;
+    }
+    &.success {
+      background: limegreen;
     }
   }
 
@@ -105,38 +126,38 @@ footer {
 
   .pull-request-title {
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+    white-space: nowrap;
+    width: 485px;
   }
 
   .pull-request-number {
     color: #AAAAAA;
-    margin: 0 1rem;
-  }
-
-  .pull-request-created {
-    font-style: italic;
-    font-size: 0.8rem;
+    margin: 0 5px 0 0;
   }
 
   .pull-request-last-updated {
-    background: $badge-color;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    color: #FFFFFF;
+    padding: 0 .5rem;
+    color: #aaa;
+    align-self: top;
+    vertical-align: top;
+    height: 100px;
   }
 
   .pr-status {
     display: inline-block;
-    margin-right: 1rem;    // Maintain spacing with the comments to the right
-    margin-left: -0.75rem; // Nudge this closer to the PR number
+    margin: 0 5px;    // Maintain spacing with the comments to the right
 
     .success {
-      color: $success-color;
+      color: limegreen;
     }
     .pending {
-      color: $warning-color;
+      color: gold;
     }
     .failure, .error {
-      color: $error-color;
+      color: red;
     }
   }
 
@@ -148,13 +169,9 @@ footer {
       margin-right: 1rem;
     }
 
-    .pr-comment-count {
-
-    }
-
     .pr-comment-positive {
       i {
-         color: green;
+         color: limegreen;
       }
     }
 
@@ -187,11 +204,11 @@ a {
 }
 
 button {
-  background-color: transparent;
+  background-color: #354250;
   padding: 0.5rem 1rem;
-  color: darken($link-color, 10%);
+  color: white;
   border-radius: 5px;
-  border: 1px solid darken($link-color, 10%);
+  border: #354250;
   font-size: 0.8rem;
   font-weight: bold;
   transition: all 0.25s ease 0s;
@@ -207,7 +224,7 @@ button {
     color: #FFFFFF;
     cursor: pointer;
     background-color: $background;
-    border-color: darken($background, 10%);
+    border-color: $background;
   }
 
   &:active {
@@ -215,7 +232,7 @@ button {
     color: #FFFFFF;
     outline: none;
     background-color: $background;
-    border-color: darken($background, 10%);
+    border-color: $background;
   }
 
   &:disabled {
@@ -306,8 +323,9 @@ button {
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  background-color: #C4D2E6;
-  box-shadow: 1px 1px 1px #999999;
+  background-color: #222;
+  color: #9d9d9d;
+  margin-bottom: 10px;
 
   h1 {
     margin: 0;
@@ -376,4 +394,22 @@ input {
   padding: 0.25em;
   border-radius: 2px;
   border: 1px solid #999999;
+}
+
+.pull-request-info {
+  height: 100px;
+}
+
+.pull-request-title .fa {
+  color: white;
+  margin-left: 3px;
+}
+
+.pull-request .fa {
+  color: white;
+  margin-right: 5px;
+}
+
+.pull-request-details > div {
+  margin-top: 4px;
 }
