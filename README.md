@@ -11,6 +11,7 @@ See your pull requests at a glance across multiple repositories.
 # Configuration
 
 1. `cp config/config.json.sample config/config.json`
+2. Change the `username` and `password` or see **Access Token** below.
 
 **Enterprise Instance**
 
@@ -18,9 +19,9 @@ If you are accessing a GitHub Enterprise instance, you will need to set `apiBase
 
 **Access Token**
 
-To use the GitHub Personal Access Token for accessing private repositories, `username` and `password` lines in `config/config.json` can be replaced with a single `"token": "MY_PERSONAL_TOKEN"` line. 
+To use the GitHub Personal Access Token for accessing private repositories, `username` and `password` lines in `config/config.json` can be replaced with a single `"token": "MY_PERSONAL_TOKEN"` line.
 
-GitHub places a very strict rate limit on unauthenticated requests. If you run into this problem, you will need to add your GitHub username and password in `config.json`.
+> GitHub places a very strict rate limit on unauthenticated requests. If you run into this problem, you will need to add your GitHub username and password in `config.json`.
 
 # Running the server
 
