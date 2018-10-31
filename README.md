@@ -1,8 +1,6 @@
-# github-pr-dashboard
+# Github PR Dashboard
 
-See pull requests at a glance, across multiple repos
-
-![](img/screenshot.png)
+See your pull requests at a glance across multiple repositories.
 
 # Setup
 After cloning the repository, run `npm install` to install dependencies.
